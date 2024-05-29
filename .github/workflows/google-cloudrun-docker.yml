@@ -13,6 +13,7 @@ env:
 
 jobs:
   deploy:
+    timeout-minutes: 30
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -47,6 +48,7 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}
+          flags: --verbosity=debug
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
