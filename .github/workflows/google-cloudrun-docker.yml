@@ -16,6 +16,7 @@ env:
   DBNAME: ${{ secrets.DBNAME }}
   DBPORT: ${{ secrets.DBPORT }}
   SERVERPORT: ${{ secrets.SERVERPORT }}
+  JWTSECRET: ${{ secrets.JWTSECRET }}
   GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
   BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
   FOLDER_NAME: ${{ secrets.FOLDER_NAME }}
@@ -77,6 +78,7 @@ jobs:
             EMAIL_PORT=${{ env.EMAIL_PORT }}
             EMAIL_USER=${{ env.EMAIL_USER }}
             EMAIL_PASS=${{ env.EMAIL_PASS }}
+            JWTSECRET=${{ env.JWTSECRET }}
             
 
       - name: Show Output
