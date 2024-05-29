@@ -2,7 +2,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   PROJECT_ID: testing-ci-cd-4248
@@ -17,13 +17,15 @@ env:
   DBPORT: ${{ secrets.DBPORT }}
   SERVERPORT: ${{ secrets.SERVERPORT }}
   GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
+  BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+  FOLDER_NAME: ${{ secrets.FOLDER_NAME }}
 
 jobs:
   deploy:
     timeout-minutes: 30
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
 
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +34,7 @@ jobs:
 
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v2'
+        uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.SERVICE_ACCOUNT }}"
 
@@ -58,6 +60,13 @@ jobs:
           flags: --verbosity=debug
           env_vars: |
             GOOGLE_CLOUD_KEY_BASE64=${{ env.GOOGLE_CLOUD_KEY_BASE64 }}
+            DBHOST=${{ env.DBHOST }}
+            DBUSER=${{ env.DBUSER }}
+            DBPASS=${{ env.DBPASS }}
+            DBNAME=${{ env.DBNAME }}
+            DBPORT=${{ env.DBPORT }}
+            SERVERPORT=${{ env.SERVERPORT }}
+            BUCKET_NAME=${{ env.BUCKET_NAME }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
