@@ -10,6 +10,7 @@ env:
   GAR_REPOSITORY_NAME: testing-ci-cd
   SERVICE: testing-ci-cd
   REGION: asia-southeast2
+  GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
 
 jobs:
   deploy:
