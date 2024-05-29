@@ -19,6 +19,11 @@ env:
   GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
   BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
   FOLDER_NAME: ${{ secrets.FOLDER_NAME }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_USER: ${{ secrets.EMAIL_USER }}
+  EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+
 
 jobs:
   deploy:
@@ -67,6 +72,12 @@ jobs:
             DBPORT=${{ env.DBPORT }}
             SERVERPORT=${{ env.SERVERPORT }}
             BUCKET_NAME=${{ env.BUCKET_NAME }}
+            FOLDER_NAME=${{ env.FOLDER_NAME }}
+            EMAIL_HOST=${{ env.EMAIL_HOST }}
+            EMAIL_PORT=${{ env.EMAIL_PORT }}
+            EMAIL_USER=${{ env.EMAIL_USER }}
+            EMAIL_PASS=${{ env.EMAIL_PASS }}
+            
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
