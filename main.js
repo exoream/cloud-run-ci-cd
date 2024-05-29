@@ -7,6 +7,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerUserDocs = require("./swagger/userdocs.json");
 const swaggerAdminDocs = require("./swagger/admindocs.json");
 const app = express();
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
