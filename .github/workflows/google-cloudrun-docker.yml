@@ -10,6 +10,12 @@ env:
   GAR_REPOSITORY_NAME: testing-ci-cd
   SERVICE: testing-ci-cd
   REGION: asia-southeast2
+  DBHOST: ${{ secrets.DBHOST }}
+  DBUSER: ${{ secrets.DBUSER }}
+  DBPASS: ${{ secrets.DBPASSWORD }}
+  DBNAME: ${{ secrets.DBNAME }}
+  DBPORT: ${{ secrets.DBPORT }}
+  PORT: ${{ secrets.SERVERPORT }}
   GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
 
 jobs:
