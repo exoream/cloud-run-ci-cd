@@ -6,19 +6,19 @@
     "version": "1.0.0",
     "contact": {
       "name": "TrotoTrack",
-      "url": "https://trototrack.my.id",
-      "email": "shiigetsu1@gmail.com"
+      "url": "https://trototrack.online",
+      "email": "trototrack@gmail.com"
     }
   },
   "servers": [
     {
-      "url": "http://localhost:8080/",
+      "url": "https://api.trototrack.online/",
       "description": "User Documentation"
     }
   ],
   "externalDocs": {
     "description": "Find out more about TrotoTrack",
-    "url": "https://trototrack.my.id"
+    "url": "https://trototrack.online"
   },
   "paths": {
     "/login": {
