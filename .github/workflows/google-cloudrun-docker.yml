@@ -15,7 +15,7 @@ env:
   DBPASS: ${{ secrets.DBPASSWORD }}
   DBNAME: ${{ secrets.DBNAME }}
   DBPORT: ${{ secrets.DBPORT }}
-  PORT: ${{ secrets.SERVERPORT }}
+  SERVERPORT: ${{ secrets.SERVERPORT }}
   GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
 
 jobs:
