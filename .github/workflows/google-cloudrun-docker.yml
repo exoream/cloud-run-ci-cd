@@ -12,7 +12,7 @@ env:
   REGION: asia-southeast2
   DBHOST: ${{ secrets.DBHOST }}
   DBUSER: ${{ secrets.DBUSER }}
-  DBPASS: ${{ secrets.DBPASSWORD }}
+  DBPASS: ${{ secrets.DBPASS }}
   DBNAME: ${{ secrets.DBNAME }}
   DBPORT: ${{ secrets.DBPORT }}
   SERVERPORT: ${{ secrets.SERVERPORT }}
