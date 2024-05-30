@@ -918,8 +918,11 @@
               "examples": {
                 "create": {
                   "value": {
-                    "title": "Bumi Sementara",
-                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
                     "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
@@ -932,8 +935,11 @@
               "examples": {
                 "create": {
                   "value": {
-                    "title": "Bumi Sementara",
-                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
                     "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
@@ -1342,21 +1348,53 @@
         }
       }
     },
-    "/send-otp": {
-      "post": {
-        "tags": ["Page User"],
-        "summary": "Send OTP",
-        "description": "Send OTP",
+    "/reports/{id}": {
+      "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Update report by id",
+        "description": "Update report by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestSendOTP"
+                "$ref": "#/components/schemas/RequestReport"
               },
               "examples": {
-                "send": {
+                "create": {
                   "value": {
-                    "email": "shiigetsu1@gmail.com"
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReportMultiPart"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
+                    "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
               }
@@ -1365,7 +1403,7 @@
         },
         "responses": {
           "200": {
-            "description": "Send OTP",
+            "description": "Update report by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -1375,7 +1413,7 @@
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success send otp"
+                      "message": "Success updated data"
                     }
                   }
                 }
@@ -1387,25 +1425,103 @@
             "content": {
               "application/json": {
                 "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "invalid_latitude": {
+                    "value": {
+                      "status": false,
+                      "message": "Latitude must be between -90 and 90"
+                    }
+                  },
+                  "invalid_longitude": {
+                    "value": {
+                      "status": false,
+                      "message": "Longitude must be between -180 and 180"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only images with jpeg, png, and jpg formats are allowed"
+                    }
+                  },
+                  "invalid_size_image": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  },
+                  "invalid_description": {
+                    "value": {
+                      "status": false,
+                      "message": "Description must be at least 10 characters long"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
                   "$ref": "#/components/schemas/ResponseError"
                 },
                 "examples": {
-                  "missing_fields": {
+                  "unauthorized": {
                     "value": {
                       "status": false,
-                      "message": "Please fill all required fields"
+                      "message": "Unauthorized"
                     }
-                  },
-                  "invalid_email": {
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
                     "value": {
                       "status": false,
-                      "message": "Email is not valid"
+                      "message": "Forbidden access"
                     }
-                  },
-                  "email_not_registered": {
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
                     "value": {
                       "status": false,
-                      "message": "Email not registered"
+                      "message": "Report not found"
                     }
                   }
                 }
@@ -1424,6 +1540,97 @@
                     "value": {
                       "status": false,
                       "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/send-otp": {
+        "post": {
+          "tags": ["Page User"],
+          "summary": "Send OTP",
+          "description": "Send OTP",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestSendOTP"
+                },
+                "examples": {
+                  "send": {
+                    "value": {
+                      "email": "shiigetsu1@gmail.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Send OTP",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "status": true,
+                        "message": "Success send otp"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseError"
+                  },
+                  "examples": {
+                    "missing_fields": {
+                      "value": {
+                        "status": false,
+                        "message": "Please fill all required fields"
+                      }
+                    },
+                    "invalid_email": {
+                      "value": {
+                        "status": false,
+                        "message": "Email is not valid"
+                      }
+                    },
+                    "email_not_registered": {
+                      "value": {
+                        "status": false,
+                        "message": "Email not registered"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseError"
+                  },
+                  "examples": {
+                    "server_error": {
+                      "value": {
+                        "status": false,
+                        "message": "Internal server error"
+                      }
                     }
                   }
                 }
@@ -1958,8 +2165,19 @@
       "RequestReport": {
         "type": "object",
         "properties": {
-          "title": {
+          "location": {
             "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -1968,13 +2186,24 @@
             "type": "string"
           }
         },
-        "required": ["title", "description", "image"]
+        "required": ["location", "latitude", "longitude", "image"]
       },
       "RequestReportMultiPart": {
         "type": "object",
         "properties": {
-          "title": {
+          "location": {
             "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -1985,7 +2214,7 @@
             "nullable": false
           }
         },
-        "required": ["title", "description", "image"]
+        "required": ["location", "latitude", "longitude", "image"]
       },
       "ResponseAllReport": {
         "type": "object",

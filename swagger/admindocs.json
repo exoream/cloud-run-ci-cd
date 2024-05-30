@@ -1785,6 +1785,44 @@
             "$ref": "#/components/parameters/ReportId"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReport"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReportMultiPart"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Update report by id",
@@ -2682,6 +2720,60 @@
           }
         },
         "required": ["status"]
+      },
+      "RequestReport": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "required": ["location", "latitude", "longitude", "image"]
+      },
+      "RequestReportMultiPart": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["location", "latitude", "longitude", "image"]
       }
     }
   }
