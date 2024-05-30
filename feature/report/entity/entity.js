@@ -8,7 +8,8 @@ class ReportCore {
     image,
     description,
     userId,
-    status
+    status,
+    createdAt,
   ) {
     this.id = id;
     this.location = location;
@@ -19,6 +20,7 @@ class ReportCore {
     this.description = description;
     this.userId = userId;
     this.status = status;
+    this.createdAt = createdAt;
   }
 }
 

@@ -11,6 +11,7 @@ function reportCoreToReportModel(report) {
     description: report.description,
     user_id: report.userId,
     status: report.status,
+    created_at: report.createdAt,
   };
 }
 
@@ -24,7 +25,8 @@ function reportModelToReportCore(report) {
     report.image,
     report.description,
     report.user_id,
-    report.status
+    report.status,
+    report.created_at
   );
   return reportCore;
 }

@@ -2,13 +2,13 @@ function reportResponse(report) {
   const response = {
     id: report.id,
     location: report.location,
-    reference_location: report.reference_location,
+    reference_location: report.referenceLocation,
     latitude: report.latitude,
     longitude: report.longitude,
     image: report.image,
     description: report.description,
-    user_id: report.id_user,
     status: report.status,
+    created_at: report.createdAt,
   };
   return response;
 }

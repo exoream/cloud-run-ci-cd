@@ -1,6 +1,8 @@
 function loginResponse(user, token) {
   const response = {
+    id: user.id,
     name: user.name,
+    username: user.username,
     email: user.email,
     token: token,
   };

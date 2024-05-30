@@ -6,19 +6,19 @@
     "version": "1.0.0",
     "contact": {
       "name": "TrotoTrack",
-      "url": "https://trototrack.online",
-      "email": "trototrack@gmail.com"
+      "url": "https://trototrack.my.id",
+      "email": "shiigetsu1@gmail.com"
     }
   },
   "servers": [
     {
-      "url": "https://api.trototrack.online/",
+      "url": "http://localhost:8080/",
       "description": "Admin Documentation"
     }
   ],
   "externalDocs": {
     "description": "Find out more about TrotoTrack",
-    "url": "https://trototrack.online"
+    "url": "https://trototrack.my.id"
   },
   "paths": {
     "/login": {
@@ -58,7 +58,9 @@
                       "status": true,
                       "message": "Login success",
                       "data": {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                         "name": "admin",
+                        "username": "admin",
                         "email": "admin@gmail.com",
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
                       }
@@ -165,11 +167,13 @@
                         {
                           "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                           "name": "hilal",
+                          "username": "exoream",
                           "email": "hilal@gmail.com"
                         },
                         {
                           "id": "ce6c992c-f260-4bc9-b332-3e12a10df8fb",
                           "name": "troto",
+                          "username": "troto",
                           "email": "troto@gmail.com"
                         }
                       ]
@@ -285,6 +289,7 @@
                       "data": {
                         "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                         "name": "hilal",
+                        "username": "exoream",
                         "email": "hilal@gmail.com"
                       }
                     }
@@ -2351,7 +2356,13 @@
           "data": {
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string"
+              },
               "name": {
+                "type": "string"
+              },
+              "username": {
                 "type": "string"
               },
               "email": {
@@ -2393,6 +2404,9 @@
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "username": {
                 "type": "string"
               },
               "email": {
