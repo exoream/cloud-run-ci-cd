@@ -166,7 +166,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Register success",
             "content": {
               "application/json": {
@@ -922,8 +922,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -939,8 +940,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -948,7 +950,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Create report",
             "content": {
               "application/json": {
@@ -1093,6 +1095,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "heavy damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1104,6 +1107,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "heavy damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1239,6 +1243,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "heavy damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1250,6 +1255,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "heavy damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1376,8 +1382,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1393,8 +1400,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1547,90 +1555,223 @@
             }
           }
         }
-      },
-      "/send-otp": {
-        "post": {
-          "tags": ["Page User"],
-          "summary": "Send OTP",
-          "description": "Send OTP",
-          "requestBody": {
+      }
+    },
+    "/reports/{id}/upvote": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Upvote report",
+        "description": "Upvote report",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upvote report",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RequestSendOTP"
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
                 },
                 "examples": {
-                  "send": {
+                  "success": {
                     "value": {
-                      "email": "shiigetsu1@gmail.com"
+                      "status": true,
+                      "message": "Success upvote report"
                     }
                   }
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "Send OTP",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
                   },
-                  "examples": {
-                    "success": {
-                      "value": {
-                        "status": true,
-                        "message": "Success send otp"
-                      }
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "already_liked": {
+                    "value": {
+                      "status": false,
+                      "message": "You have already upvote this report"
                     }
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Validation error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseError"
-                  },
-                  "examples": {
-                    "missing_fields": {
-                      "value": {
-                        "status": false,
-                        "message": "Please fill all required fields"
-                      }
-                    },
-                    "invalid_email": {
-                      "value": {
-                        "status": false,
-                        "message": "Email is not valid"
-                      }
-                    },
-                    "email_not_registered": {
-                      "value": {
-                        "status": false,
-                        "message": "Email not registered"
-                      }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
                     }
                   }
                 }
               }
-            },
-            "500": {
-              "description": "Internal server error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseError"
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/send-otp": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Send OTP",
+        "description": "Send OTP",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestSendOTP"
+              },
+              "examples": {
+                "send": {
+                  "value": {
+                    "email": "hilal@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send OTP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success send otp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
                   },
-                  "examples": {
-                    "server_error": {
-                      "value": {
-                        "status": false,
-                        "message": "Internal server error"
-                      }
+                  "invalid_email": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
                     }
                   }
                 }
@@ -1701,18 +1842,6 @@
                       "message": "Email is not valid"
                     }
                   },
-                  "email_not_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email not registered"
-                    }
-                  },
-                  "invalid_email_otp": {
-                    "value": {
-                      "status": false,
-                      "message": "Email or OTP is incorrect"
-                    }
-                  },
                   "invalid_otp": {
                     "value": {
                       "status": false,
@@ -1723,6 +1852,24 @@
                     "value": {
                       "status": false,
                       "message": "OTP is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
                     }
                   }
                 }
@@ -1812,12 +1959,6 @@
                       "message": "Email is not valid"
                     }
                   },
-                  "email_not_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email not registered"
-                    }
-                  },
                   "short_password": {
                     "value": {
                       "status": false,
@@ -1828,6 +1969,114 @@
                     "value": {
                       "status": false,
                       "message": "Password and Confirm Password must be the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scan": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Scan",
+        "description": "Scan",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestScan"
+              },
+              "examples": {
+                "scan": {
+                  "value": {
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScan"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "heavy damaged",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is heavily damaged. Please report this area"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "No image uploaded or invalid image buffer."
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Expected image (BMP, JPEG, PNG, or GIF), but got unsupported image type: ${mimeType}"
                     }
                   }
                 }
@@ -2179,14 +2428,24 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
+          "image": {
             "type": "string"
           },
-          "image": {
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "RequestReportMultiPart": {
         "type": "object",
@@ -2205,16 +2464,26 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
-            "type": "string"
-          },
           "image": {
             "type": "string",
             "format": "binary",
             "nullable": false
+          },
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "ResponseAllReport": {
         "type": "object",
@@ -2251,6 +2520,9 @@
                 "image": {
                   "type": "string"
                 },
+                "status_damage": {
+                  "type": "string"
+                },
                 "description": {
                   "type": "string"
                 },
@@ -2268,6 +2540,7 @@
                 "reference_location",
                 "latitude",
                 "longitude",
+                "status_damage",
                 "image",
                 "description",
                 "status",
@@ -2326,6 +2599,9 @@
                 "type": "number",
                 "format": "double"
               },
+              "status_damage": {
+                "type": "string"
+              },
               "image": {
                 "type": "string"
               },
@@ -2347,6 +2623,7 @@
               "latitude",
               "longitude",
               "image",
+              "status_damage",
               "description",
               "status",
               "created_at"
@@ -2408,6 +2685,44 @@
           }
         },
         "required": ["email", "password", "confirm_password"]
+      },
+      "RequestScan": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["image"]
+      },
+      "ResponseScan": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "string"
+              },
+              "description": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": ["label", "probability", "description"]
+          }
+        }
       }
     }
   }

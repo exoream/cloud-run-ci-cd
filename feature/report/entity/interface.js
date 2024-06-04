@@ -26,6 +26,10 @@ class ReportRepositoryInterface {
   async updateStatusReport(id, status) {
     throw new Error("Method not implemented");
   }
+
+  async likeReport(id, like) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class ReportServiceInterface {
@@ -54,6 +58,10 @@ class ReportServiceInterface {
   }
 
   async updateStatusReport(id, status) {
+    throw new Error("Method not implemented");
+  }
+
+  async likeReport(id, like) {
     throw new Error("Method not implemented");
   }
 }

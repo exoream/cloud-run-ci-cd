@@ -36,14 +36,14 @@ function jwtMiddleware(req, res, next) {
   console.log("Token:", token);
 
   if (!token) {
-    return res.status(401).json(errorResponse(message.ERROR_UNAUTHORIZED));
+    return res.status(401).json(errorResponse("Unauthorized"));
   }
 
   jwt.verify(token, secretKey, (err, user) => {
     console.log("JWT Verification Error:", err ? err.message : "Unknown error");
     console.log("Secret Key:", secretKey);
     if (err) {
-      return res.status(403).json(errorResponse(message.ERROR_UNAUTHORIZED));
+      return res.status(401).json(errorResponse("Unauthorized"));
     }
 
     req.user = user;

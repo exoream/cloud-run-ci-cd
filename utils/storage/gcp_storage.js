@@ -57,4 +57,40 @@ const uploadFileToGCS = async (filePath) => {
   }
 };
 
-module.exports = { uploadFileToGCS };
+const uploadFileToGCSForArticle = async (filePath) => {
+  try {
+    // Generate UUID for the file
+    const newFileName = uuidv4();
+    const ext = path.extname(filePath).toLowerCase();
+
+    let typeFile;
+    if (ext === ".jpeg" || ext === ".jpg") {
+      typeFile = "image/jpeg";
+    } else if (ext === ".png") {
+      typeFile = "image/png";
+    } else {
+      throw new Error("File bukan file gambar (jpeg/png)");
+    }
+
+    // Set destination path with new file name and original extension
+    const folderName = "article";
+    const destination = `${folderName}/${newFileName}${ext}`;
+
+    await bucket.upload(filePath, {
+      destination: destination,
+      resumable: false,
+      public: true,
+      metadata: {
+        contentType: typeFile,
+      },
+    });
+
+    const publicUrl = `https://storage.googleapis.com/${bucketName}/${destination}`;
+    return publicUrl;
+  } catch (err) {
+    console.error("Error saat mengunggah file:", err);
+    throw err;
+  }
+};
+
+module.exports = { uploadFileToGCS, uploadFileToGCSForArticle };

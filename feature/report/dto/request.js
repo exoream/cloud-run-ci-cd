@@ -4,6 +4,7 @@ function reportRequest(body) {
     reference_location,
     latitude,
     longitude,
+    status_damage,
     description,
     user_id,
   } = body;
@@ -12,6 +13,7 @@ function reportRequest(body) {
     referenceLocation: reference_location,
     latitude,
     longitude,
+    statusDamage: status_damage,
     description,
     userId: user_id,
   };

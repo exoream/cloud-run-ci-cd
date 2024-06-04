@@ -290,7 +290,7 @@ class UserController {
       const email = req.body.email;
       const otp = req.body.otp;
       await this.userService.verifyOtpEmail(email, otp);
-      return res.status(200).json(successResponse("verify otp success"));
+      return res.status(200).json(successResponse("Success verify otp"));
     } catch (error) {
       if (error instanceof NotFoundError || error instanceof ValidationError) {
         return res.status(error.statusCode).json(errorResponse(error.message));

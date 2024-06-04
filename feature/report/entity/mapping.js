@@ -8,9 +8,11 @@ function reportCoreToReportModel(report) {
     latitude: report.latitude,
     longitude: report.longitude,
     image: report.image,
+    status_damage: report.statusDamage,
     description: report.description,
     user_id: report.userId,
     status: report.status,
+    like: report.like,
     created_at: report.createdAt,
   };
 }
@@ -23,9 +25,11 @@ function reportModelToReportCore(report) {
     report.latitude,
     report.longitude,
     report.image,
+    report.status_damage,
     report.description,
-    report.user_id,
+    report.id_user,
     report.status,
+    report.like,
     report.created_at
   );
   return reportCore;

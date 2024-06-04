@@ -14,6 +14,7 @@ class ReportService extends ReportServiceInterface {
       !data.location ||
       !data.latitude ||
       !data.longitude ||
+      !data.statusDamage ||
       !data.description ||
       !file
     ) {
@@ -220,6 +221,36 @@ class ReportService extends ReportServiceInterface {
     }
 
     const result = await this.reportRepository.updateStatusReport(id, status);
+    return result;
+  }
+
+  async likeReport(id, idUser) {
+    if (!id) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    const userLikedReport = await this.reportRepository.checkUserLikedReport(
+      id,
+      idUser
+    );
+
+    if(userLikedReport) {
+      throw new ValidationError("You have already upvote this report");
+    }
+
+    // Check if the user has liked the report
+    const currentReport = await this.reportRepository.getReportById(id);
+    const updatedLike = currentReport.like + 1;
+
+    const result = await this.reportRepository.likeReport(
+      id,
+      updatedLike,
+      idUser
+    );
     return result;
   }
 }

@@ -4,11 +4,12 @@ const {
   reportModelToReportCore,
   listReportModelToListReportCore,
 } = require("../entity/mapping");
-const Report = require("../model/model");
+const { Report, ReportLikes } = require("../model/model");
 const { uploadFileToGCS } = require("../../../utils/storage/gcp_storage");
 const { NotFoundError } = require("../../../utils/helper/response");
 const { calculateData } = require("../../../utils/helper/pagination");
 const { Op } = require("sequelize");
+const sequelize = require("../../../app/database/mysql");
 
 class ReportRepository extends ReportRepositoryInterface {
   constructor() {
@@ -146,6 +147,57 @@ class ReportRepository extends ReportRepositoryInterface {
 
     const result = reportModelToReportCore(updateStatus);
     return result;
+  }
+
+  async likeReport(id, like, userId) {
+    const transaction = await sequelize.transaction();
+    try {
+      const report = await this.report.findByPk(id, {transaction});
+
+      if (!report) {
+        throw new NotFoundError("User task not found");
+      }
+
+      const updatedReport = await this.report.update(
+        { like: like },
+        {
+          where: {
+            id: id,
+          },
+          transaction,
+        }
+      );
+
+      await ReportLikes.create(
+        {
+          id_user: userId,
+          id_report: id,
+        },
+        { transaction }
+      );
+
+      await transaction.commit();
+
+      return reportModelToReportCore(updatedReport);
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  }
+
+  async checkUserLikedReport(id, userId) {
+    const userLikedReport = await ReportLikes.findOne({
+      where: {
+        id_user: userId,
+        id_report: id,
+      },
+    });
+
+    if (userLikedReport) {
+      return true;
+    }
+
+    return false;
   }
 }
 

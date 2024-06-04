@@ -2,13 +2,13 @@ name: Build and Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["development"]
 
 env:
-  PROJECT_ID: testing-ci-cd-4248
+  PROJECT_ID: trototrack
   GAR_LOCATION: asia-southeast2
-  GAR_REPOSITORY_NAME: testing-ci-cd
-  SERVICE: testing-ci-cd
+  GAR_REPOSITORY_NAME: trototrack
+  SERVICE: trototrack
   REGION: asia-southeast2
   DBHOST: ${{ secrets.DBHOST }}
   DBUSER: ${{ secrets.DBUSER }}
@@ -24,7 +24,6 @@ env:
   EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
   EMAIL_USER: ${{ secrets.EMAIL_USER }}
   EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-
 
 jobs:
   deploy:
@@ -79,7 +78,6 @@ jobs:
             EMAIL_USER=${{ env.EMAIL_USER }}
             EMAIL_PASS=${{ env.EMAIL_PASS }}
             JWTSECRET=${{ env.JWTSECRET }}
-            
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}

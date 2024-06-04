@@ -237,18 +237,22 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    const uppercaseOTP = otp.toUpperCase();
-
-    const otpData = await this.userRepo.verifyOtpEmail(email, uppercaseOTP);
-    if (!otpData) {
-      throw new ValidationError("Email or OTP is incorrect");
+    if(!validator.isEmail(email)) {
+      throw new ValidationError("Email is not valid");
+    }
+    
+    const result = await this.userRepo.getUserByEmail(email);
+    if (!result) {
+      throw new NotFoundError("Email not registered");
     }
 
-    if (otpData.otp_expired_time < Date.now()) {
+    const uppercaseOTP = otp.toUpperCase();
+
+    if (result.otp_expired_time < Date.now()) {
       throw new ValidationError("OTP is expired");
     }
 
-    if (otpData.otp !== uppercaseOTP ) {
+    if (result.otp !== uppercaseOTP ) {
       throw new ValidationError("OTP is incorrect");
     }
 
