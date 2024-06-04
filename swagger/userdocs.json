@@ -2016,9 +2016,14 @@
     },
     "/scan": {
       "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Page User"],
-        "summary": "Scan",
-        "description": "Scan",
+        "summary": "Scan Image",
+        "description": "Scan Image",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -2037,7 +2042,7 @@
         },
         "responses": {
           "200": {
-            "description": "Scan",
+            "description": "Scan Image",
             "content": {
               "application/json": {
                 "schema": {
